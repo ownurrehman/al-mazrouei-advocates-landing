@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +8,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
         :root {
             --gold: #C8A45C;
             --gold-light: #D4B76A;
@@ -17,518 +20,633 @@
             --navy: #0B1E33;
             --navy-light: #122D4A;
             --navy-mid: #1A3A5C;
+            --navy-soft: #0D2540;
             --cream: #F7F4ED;
             --white: #FFFFFF;
+            --off-white: #FAF9F6;
             --text: #1C1C1E;
-            --text-secondary: #555;
-            --text-light: #888;
-            --radius: 12px;
-            --radius-sm: 8px;
-            --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
-            --shadow-md: 0 2px 6px rgba(0,0,0,0.08), 0 8px 30px rgba(0,0,0,0.06);
-            --shadow-lg: 0 4px 12px rgba(0,0,0,0.1), 0 16px 48px rgba(0,0,0,0.08);
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --text-secondary: #555555;
+            --text-muted: #888888;
+            --border-light: rgba(0,0,0,0.06);
+            --border-strong: rgba(0,0,0,0.10);
+            --radius: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.04);
+            --shadow-md: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.05);
+            --shadow-lg: 0 4px 16px rgba(0,0,0,0.08), 0 16px 40px rgba(0,0,0,0.06);
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         html { scroll-behavior: smooth; }
+
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             color: var(--text);
             background: var(--white);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
         }
-        h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; }
-        
-        /* Nav */
+
+        h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; }
+
+        /* --- Navigation --- */
         .nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            background: rgba(11, 30, 51, 0.92);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            background: rgba(11, 30, 51, 0.94);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255,255,255,0.06);
-            transition: var(--transition);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
-        .nav.scrolled { background: rgba(11, 30, 51, 0.98); box-shadow: 0 2px 20px rgba(0,0,0,0.15); }
-        .nav-inner { max-width: 1280px; margin: 0 auto; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; }
-        .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--white); letter-spacing: -0.3px; text-decoration: none; }
-        .nav-logo span { color: var(--gold); }
+        .nav.scrolled { background: rgba(11, 30, 51, 0.99); box-shadow: 0 2px 24px rgba(0,0,0,0.18); }
+        .nav-inner {
+            max-width: 1240px; margin: 0 auto; padding: 14px 32px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .nav-brand {
+            display: flex; align-items: center; gap: 10px; text-decoration: none;
+        }
+        .nav-brand-icon {
+            width: 36px; height: 36px; color: var(--gold);
+        }
+        .nav-logo-text {
+            font-family: 'Playfair Display', serif; font-size: 1.25rem;
+            font-weight: 700; color: var(--white); letter-spacing: -0.2px;
+        }
+        .nav-logo-text span { color: var(--gold); }
+        .nav-links { display: flex; gap: 28px; align-items: center; list-style: none; }
+        .nav-links a {
+            color: rgba(255,255,255,0.78); text-decoration: none;
+            font-size: 0.875rem; font-weight: 500; transition: color 0.2s ease;
+            letter-spacing: -0.1px;
+        }
+        .nav-links a:hover { color: var(--white); }
         .nav-cta {
             background: var(--gold); color: var(--navy); border: none;
-            padding: 10px 24px; border-radius: 100px; font-size: 0.9rem;
+            padding: 9px 22px; border-radius: 6px; font-size: 0.85rem;
             font-weight: 600; cursor: pointer; transition: var(--transition);
-            text-decoration: none; display: inline-block; letter-spacing: -0.2px;
+            text-decoration: none; letter-spacing: -0.1px;
         }
-        .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(200,164,92,0.3); }
-        .nav-links { display: flex; gap: 32px; align-items: center; list-style: none; }
-        .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: var(--transition); }
-        .nav-links a:hover { color: var(--gold); }
+        .nav-cta:hover { background: var(--gold-light); }
+        .mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+        .mobile-toggle span {
+            display: block; width: 22px; height: 2px; background: var(--white);
+            margin: 5px 0; transition: var(--transition); border-radius: 2px;
+        }
 
-        /* Hero */
+        /* --- Hero --- */
         .hero {
             min-height: 100vh; display: flex; align-items: center;
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 40%, #0D2A4A 100%);
+            background: var(--navy);
             position: relative; overflow: hidden; padding: 120px 32px 80px;
         }
-        .hero::before {
-            content: ''; position: absolute; top: -50%; right: -20%;
-            width: 800px; height: 800px;
-            background: radial-gradient(circle, rgba(200,164,92,0.08) 0%, transparent 70%);
-            border-radius: 50%;
+        .hero-bg-line {
+            position: absolute; top: 0; bottom: 0; right: 0; width: 42%;
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 79px,
+                    rgba(200,164,92,0.04) 79px,
+                    rgba(200,164,92,0.04) 80px
+                );
+            pointer-events: none;
         }
-        .hero::after {
-            content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(200,164,92,0.3), transparent);
+        .hero-accent-dot {
+            position: absolute; width: 480px; height: 480px;
+            border: 1px solid rgba(200,164,92,0.10);
+            border-radius: 50%; top: -15%; right: -8%; pointer-events: none;
         }
-        .hero-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-        .hero-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(200,164,92,0.12); border: 1px solid rgba(200,164,92,0.25);
-            padding: 8px 18px; border-radius: 100px; margin-bottom: 28px;
-            font-size: 0.85rem; font-weight: 600; color: var(--gold-light);
-            letter-spacing: 0.4px;
+        .hero-accent-dot::after {
+            content: ''; position: absolute; width: 220px; height: 220px;
+            border: 1px solid rgba(200,164,92,0.12);
+            border-radius: 50%; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
         }
-        .hero-badge-dot { width: 7px; height: 7px; background: var(--gold); border-radius: 50%; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.5); } }
+        .hero-inner {
+            max-width: 1240px; margin: 0 auto; position: relative; z-index: 1;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;
+        }
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-size: 0.8rem; font-weight: 600; color: var(--gold-light);
+            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 24px;
+        }
+        .hero-eyebrow-line { width: 32px; height: 1px; background: var(--gold); }
         .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 3.8rem); font-weight: 700;
-            color: var(--white); line-height: 1.15; margin-bottom: 24px; letter-spacing: -0.5px;
+            font-size: clamp(2.4rem, 4.5vw, 3.4rem); font-weight: 700;
+            color: var(--white); line-height: 1.12; margin-bottom: 22px; letter-spacing: -0.6px;
         }
-        .hero h1 span { color: var(--gold); }
-        .hero-desc { font-size: 1.15rem; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 36px; max-width: 520px; }
-        .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+        .hero h1 em { font-style: normal; color: var(--gold); }
+        .hero-desc {
+            font-size: 1.05rem; color: rgba(255,255,255,0.62);
+            line-height: 1.72; margin-bottom: 36px; max-width: 500px;
+        }
+        .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
         .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
             background: var(--gold); color: var(--navy); border: none;
-            padding: 16px 36px; border-radius: 100px; font-size: 1rem;
+            padding: 15px 32px; border-radius: 6px; font-size: 0.95rem;
             font-weight: 600; cursor: pointer; transition: var(--transition);
-            text-decoration: none; display: inline-block; letter-spacing: -0.2px;
+            text-decoration: none; letter-spacing: -0.2px;
         }
-        .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(200,164,92,0.35); }
-        .btn-outline {
-            background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.25);
-            padding: 16px 36px; border-radius: 100px; font-size: 1rem;
-            font-weight: 600; cursor: pointer; transition: var(--transition);
-            text-decoration: none; display: inline-block; letter-spacing: -0.2px;
+        .btn-primary:hover { background: var(--gold-light); }
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: transparent; color: var(--white);
+            border: 1px solid rgba(255,255,255,0.20);
+            padding: 15px 32px; border-radius: 6px; font-size: 0.95rem;
+            font-weight: 500; cursor: pointer; transition: var(--transition);
+            text-decoration: none; letter-spacing: -0.2px;
         }
-        .btn-outline:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
-        .hero-visual {
-            position: relative; display: flex; justify-content: center; align-items: center;
-        }
-        .hero-card {
-            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 24px; padding: 40px; backdrop-filter: blur(10px);
-            width: 100%; max-width: 440px;
-        }
-        .hero-stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
-        .hero-stat h3 { font-size: 2rem; color: var(--gold); font-weight: 700; line-height: 1; margin-bottom: 6px; }
-        .hero-stat p { font-size: 0.85rem; color: rgba(255,255,255,0.5); font-weight: 500; }
-        .hero-clients { display: flex; align-items: center; gap: 12px; }
-        .hero-clients-avatars { display: flex; }
-        .hero-clients-avatars span {
-            width: 40px; height: 40px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.7rem; font-weight: 700; color: var(--white);
-            background: var(--navy-mid); margin-right: -10px;
-        }
-        .hero-clients p { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
-        .hero-clients strong { color: var(--white); }
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.40); background: rgba(255,255,255,0.04); }
 
-        /* Trust Strip */
-        .trust-strip {
-            padding: 40px 32px; background: var(--cream);
-            border-bottom: 1px solid rgba(0,0,0,0.04);
+        .hero-stats-card {
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--radius-lg); padding: 36px 32px;
         }
-        .trust-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 64px; flex-wrap: wrap; }
-        .trust-item { display: flex; align-items: center; gap: 12px; }
-        .trust-icon {
-            width: 44px; height: 44px; border-radius: var(--radius-sm);
-            background: var(--white); display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; box-shadow: var(--shadow);
-        }
-        .trust-text { font-size: 0.9rem; font-weight: 600; color: var(--navy); letter-spacing: -0.2px; }
+        .hero-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-bottom: 28px; }
+        .hero-stat-value { font-size: 2.1rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+        .hero-stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.45); font-weight: 500; text-transform: uppercase; letter-spacing: 0.6px; }
+        .hero-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 20px 0; }
+        .hero-trust-line { font-size: 0.82rem; color: rgba(255,255,255,0.45); }
 
-        /* Section Common */
-        .section { padding: 100px 32px; }
-        .section-inner { max-width: 1280px; margin: 0 auto; }
-        .section-tag {
-            display: inline-block; font-size: 0.8rem; font-weight: 700;
-            color: var(--gold-dark); text-transform: uppercase; letter-spacing: 1.5px;
-            margin-bottom: 16px;
+        /* --- Trust Bar --- */
+        .trust-bar {
+            padding: 0; background: var(--navy);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
-        .section-title {
-            font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700;
-            color: var(--navy); margin-bottom: 20px; letter-spacing: -0.5px; line-height: 1.2;
+        .trust-bar-inner {
+            max-width: 1240px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(4, 1fr);
         }
-        .section-desc { font-size: 1.05rem; color: var(--text-secondary); max-width: 600px; line-height: 1.7; margin-bottom: 48px; }
+        .trust-bar-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 22px 28px; border-right: 1px solid rgba(255,255,255,0.06);
+        }
+        .trust-bar-item:last-child { border-right: none; }
+        .trust-bar-icon {
+            width: 20px; height: 20px; color: var(--gold); flex-shrink: 0;
+        }
+        .trust-bar-text { font-size: 0.8rem; font-weight: 500; color: rgba(255,255,255,0.65); letter-spacing: -0.1px; }
 
-        /* Services */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        /* --- Section Common --- */
+        .section { padding: 96px 32px; }
+        .section-alt { background: var(--off-white); }
+        .section-inner { max-width: 1240px; margin: 0 auto; }
+        .section-eyebrow {
+            display: block; font-size: 0.78rem; font-weight: 700;
+            color: var(--gold-dark); text-transform: uppercase;
+            letter-spacing: 1.5px; margin-bottom: 14px;
+        }
+        .section-eyebrow-light { color: var(--gold-light); }
+        .section-heading {
+            font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 700;
+            color: var(--navy); margin-bottom: 18px; letter-spacing: -0.4px; line-height: 1.2;
+        }
+        .section-heading-light { color: var(--white); }
+        .section-lead {
+            font-size: 1rem; color: var(--text-secondary);
+            max-width: 600px; line-height: 1.7; margin-bottom: 56px;
+        }
+        .section-lead-light { color: rgba(255,255,255,0.60); }
+
+        /* --- Services Grid --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1px;
+            background: var(--border-light);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
         .service-card {
-            background: var(--white); border: 1px solid rgba(0,0,0,0.06);
-            border-radius: var(--radius); padding: 36px; transition: var(--transition);
-            position: relative; overflow: hidden;
+            background: var(--white); padding: 36px 32px;
+            transition: background 0.25s ease;
+            display: flex; gap: 18px; align-items: flex-start;
         }
-        .service-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-            background: linear-gradient(90deg, var(--gold), var(--gold-light));
-            transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+        .service-card:hover { background: #FCFBF8; }
+        .service-icon-wrap {
+            width: 44px; height: 44px; border-radius: var(--radius);
+            background: rgba(200,164,92,0.08);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; margin-top: 2px;
         }
-        .service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: transparent; }
-        .service-card:hover::before { transform: scaleX(1); }
-        .service-icon {
-            width: 56px; height: 56px; border-radius: var(--radius-sm);
-            background: rgba(200,164,92,0.1); display: flex; align-items: center;
-            justify-content: center; font-size: 1.5rem; margin-bottom: 20px;
-        }
-        .service-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
-        .service-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; }
+        .service-icon-wrap svg { width: 22px; height: 22px; color: var(--gold-dark); }
+        .service-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+        .service-body p { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.65; }
 
-        /* About / Why Us */
-        .about { background: var(--navy); position: relative; overflow: hidden; }
-        .about::before {
-            content: ''; position: absolute; bottom: -30%; left: -10%;
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(200,164,92,0.06) 0%, transparent 70%);
-            border-radius: 50%;
+        /* --- About Section --- */
+        .about-section { background: var(--navy); position: relative; overflow: hidden; }
+        .about-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;
+            position: relative; z-index: 1;
         }
-        .about .section-tag { color: var(--gold-light); }
-        .about .section-title, .about .section-desc { color: var(--white); }
-        .about .section-desc { color: rgba(255,255,255,0.65); }
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; position: relative; z-index: 1; }
-        .about-features { display: grid; gap: 20px; }
-        .about-feature {
+        .about-pillars { display: grid; gap: 16px; }
+        .about-pillar {
             display: flex; gap: 16px; align-items: flex-start;
-            padding: 20px; background: rgba(255,255,255,0.04);
-            border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.06);
+            padding: 22px 20px; background: rgba(255,255,255,0.025);
+            border-left: 2px solid transparent; transition: border-color 0.25s ease;
         }
-        .about-feature-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
-        .about-feature h4 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
-        .about-feature p { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
-        .about-visual { display: flex; flex-direction: column; gap: 16px; }
-        .about-stat-card {
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
-            border-radius: var(--radius); padding: 28px 32px;
+        .about-pillar:hover { border-left-color: var(--gold); }
+        .about-pillar-icon { width: 22px; height: 22px; color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+        .about-pillar-content h4 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+        .about-pillar-content p { font-size: 0.84rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
+        .about-metrics { display: flex; flex-direction: column; gap: 14px; }
+        .about-metric {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--radius); padding: 24px 28px;
         }
-        .about-stat-card h3 { font-size: 2.2rem; color: var(--gold); font-weight: 700; margin-bottom: 4px; }
-        .about-stat-card p { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+        .about-metric-value { font-size: 2rem; font-weight: 700; color: var(--gold); margin-bottom: 2px; }
+        .about-metric-label { font-size: 0.82rem; color: rgba(255,255,255,0.45); }
 
-        /* Testimonials */
-        .testimonials { background: var(--cream); }
-        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
-        .testimonial-card {
-            background: var(--white); border-radius: var(--radius);
-            padding: 32px; box-shadow: var(--shadow);
+        /* --- Testimonials --- */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            gap: 22px;
         }
-        .testimonial-stars { color: var(--gold); font-size: 0.95rem; margin-bottom: 16px; letter-spacing: 2px; }
-        .testimonial-text { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
-        .testimonial-author { display: flex; align-items: center; gap: 12px; }
-        .testimonial-avatar {
-            width: 44px; height: 44px; border-radius: 50%;
+        .testimonial-card {
+            background: var(--white); border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg); padding: 30px 28px;
+        }
+        .testimonial-quote-icon { width: 28px; height: 28px; color: var(--gold); opacity: 0.45; margin-bottom: 14px; }
+        .testimonial-text {
+            font-size: 0.92rem; color: var(--text-secondary);
+            line-height: 1.7; margin-bottom: 22px;
+        }
+        .testimonial-author { display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--border-light); padding-top: 18px; }
+        .testimonial-initials {
+            width: 42px; height: 42px; border-radius: 50%;
             background: var(--navy-mid); color: var(--gold);
             display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 0.85rem;
+            font-weight: 700; font-size: 0.8rem; flex-shrink: 0;
         }
-        .testimonial-name { font-weight: 700; font-size: 0.9rem; color: var(--navy); }
-        .testimonial-role { font-size: 0.8rem; color: var(--text-light); }
+        .testimonial-name { font-weight: 700; font-size: 0.88rem; color: var(--navy); }
+        .testimonial-role { font-size: 0.78rem; color: var(--text-muted); }
 
-        /* CTA */
-        .cta {
-            background: linear-gradient(135deg, var(--navy) 0%, #0A2840 100%);
+        /* --- CTA / Contact --- */
+        .cta-section {
+            background: var(--navy-soft);
             position: relative; overflow: hidden; text-align: center;
         }
-        .cta::before {
-            content: ''; position: absolute; top: -30%; left: 50%; transform: translateX(-50%);
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(200,164,92,0.1) 0%, transparent 60%);
-            border-radius: 50%;
+        .cta-section .section-lead { margin: 0 auto 44px; }
+        .contact-card {
+            max-width: 580px; margin: 0 auto; position: relative; z-index: 1;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px; padding: 40px;
         }
-        .cta .section-title { color: var(--white); }
-        .cta .section-desc { color: rgba(255,255,255,0.65); margin: 0 auto 40px; }
-
-        /* Form */
-        .cta-form {
-            max-width: 560px; margin: 0 auto; position: relative; z-index: 1;
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px; padding: 40px;
-        }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-        .form-group { margin-bottom: 16px; }
-        .form-group.full { margin-bottom: 20px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+        .form-group { margin-bottom: 14px; text-align: left; }
         .form-group label {
-            display: block; font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.7);
-            margin-bottom: 8px; letter-spacing: 0.3px; text-align: left;
+            display: block; font-size: 0.78rem; font-weight: 600;
+            color: rgba(255,255,255,0.60); margin-bottom: 6px;
+            letter-spacing: 0.2px;
         }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 14px 18px; border-radius: var(--radius-sm);
-            border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.06);
-            color: var(--white); font-size: 0.95rem; font-family: 'Inter', sans-serif;
-            transition: var(--transition); outline: none;
+        .form-field {
+            width: 100%; padding: 13px 16px; border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.04);
+            color: var(--white); font-size: 0.92rem;
+            font-family: 'Inter', sans-serif; transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            outline: none;
         }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            border-color: var(--gold); background: rgba(255,255,255,0.08); box-shadow: 0 0 0 4px rgba(200,164,92,0.08);
+        .form-field:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(200,164,92,0.10);
         }
-        .form-group textarea { resize: vertical; min-height: 100px; }
-        .form-group select { appearance: none; cursor: pointer; }
-        .form-group select option { background: var(--navy); color: var(--white); }
-        .form-submit {
-            width: 100%; padding: 16px; border: none; border-radius: 100px;
-            background: var(--gold); color: var(--navy); font-size: 1rem;
+        .form-field::placeholder { color: rgba(255,255,255,0.20); }
+        select.form-field { appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23C8A45C' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+        select.form-field option { background: var(--navy); color: var(--white); }
+        textarea.form-field { resize: vertical; min-height: 100px; }
+        .btn-submit {
+            width: 100%; padding: 15px; border: none; border-radius: 6px;
+            background: var(--gold); color: var(--navy); font-size: 0.95rem;
             font-weight: 700; cursor: pointer; transition: var(--transition);
-            letter-spacing: -0.2px;
+            letter-spacing: -0.1px; font-family: 'Inter', sans-serif;
         }
-        .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(200,164,92,0.35); }
-        .form-disclaimer { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-top: 16px; line-height: 1.5; }
+        .btn-submit:hover { background: var(--gold-light); }
+        .form-note {
+            font-size: 0.72rem; color: rgba(255,255,255,0.28);
+            margin-top: 16px; line-height: 1.5;
+        }
+        .success-msg {
+            display: none; background: rgba(200,164,92,0.10);
+            border: 1px solid var(--gold); border-radius: 6px;
+            padding: 15px 18px; color: var(--gold-light); font-weight: 600;
+            margin-bottom: 18px; font-size: 0.9rem;
+        }
 
-        /* Footer */
+        /* --- Footer --- */
         .footer {
-            background: var(--navy); padding: 48px 32px 32px;
+            background: var(--navy); padding: 40px 32px 32px;
             border-top: 1px solid rgba(255,255,255,0.06);
         }
-        .footer-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
-        .footer-text { font-size: 0.85rem; color: rgba(255,255,255,0.4); }
-        .footer-links { display: flex; gap: 24px; list-style: none; }
-        .footer-links a { font-size: 0.85rem; color: rgba(255,255,255,0.5); text-decoration: none; transition: var(--transition); }
+        .footer-inner {
+            max-width: 1240px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 20px;
+        }
+        .footer-text { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+        .footer-links { display: flex; gap: 22px; list-style: none; }
+        .footer-links a {
+            font-size: 0.8rem; color: rgba(255,255,255,0.40);
+            text-decoration: none; transition: color 0.2s ease;
+        }
         .footer-links a:hover { color: var(--gold); }
 
-        /* Success Message (hidden by default) */
-        .success-msg {
-            display: none; background: rgba(200,164,92,0.15);
-            border: 1px solid var(--gold); border-radius: var(--radius-sm);
-            padding: 16px 20px; color: var(--gold-light); font-weight: 600;
-            margin-bottom: 20px; text-align: center;
+        /* --- Responsive --- */
+        @media (max-width: 1024px) {
+            .services-grid { grid-template-columns: 1fr 1fr; }
+            .trust-bar-inner { grid-template-columns: 1fr 1fr; }
+            .trust-bar-item:nth-child(even) { border-right: none; }
+            .trust-bar-item:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,0.06); }
         }
-
-        /* Mobile Nav */
-        .mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
-        .mobile-toggle span { display: block; width: 24px; height: 2px; background: var(--white); margin: 5px 0; transition: var(--transition); border-radius: 2px; }
-
-        @media (max-width: 900px) {
+        @media (max-width: 860px) {
             .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-            .hero { text-align: center; padding: 100px 24px 60px; }
+            .hero { text-align: center; padding: 104px 24px 56px; }
             .hero-desc { margin: 0 auto 36px; }
-            .hero-btns { justify-content: center; }
-            .hero-visual { order: -1; }
-            .hero-card { max-width: 100%; }
+            .hero-actions { justify-content: center; }
+            .hero-eyebrow { justify-content: center; }
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
-            .about { text-align: center; }
-        }
-        @media (max-width: 768px) {
+            .about-section { text-align: left; }
+            .services-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; }
             .nav-links.open {
                 display: flex; flex-direction: column; position: absolute;
                 top: 100%; left: 0; right: 0; background: var(--navy);
-                padding: 24px 32px; gap: 16px; border-top: 1px solid rgba(255,255,255,0.06);
+                padding: 20px 32px; gap: 14px;
+                border-top: 1px solid rgba(255,255,255,0.06);
             }
             .mobile-toggle { display: block; }
-            .form-row { grid-template-columns: 1fr; }
-            .trust-inner { gap: 32px; }
-            .section { padding: 64px 24px; }
-            .cta-form { padding: 28px 20px; }
-            .footer-inner { flex-direction: column; text-align: center; }
         }
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 2rem; }
-            .hero-btns { flex-direction: column; width: 100%; }
-            .hero-btns .btn-primary, .hero-btns .btn-outline { width: 100%; text-align: center; }
+        @media (max-width: 580px) {
+            .form-row { grid-template-columns: 1fr; }
+            .trust-bar-inner { grid-template-columns: 1fr; }
+            .trust-bar-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+            .trust-bar-item:last-child { border-bottom: none; }
+            .hero-stats-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+            .hero-stats-card { padding: 24px 20px; }
+            .section { padding: 64px 20px; }
+            .contact-card { padding: 28px 18px; }
+            .footer-inner { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- --- Navigation --- -->
     <nav class="nav" id="nav">
         <div class="nav-inner">
-            <a href="#" class="nav-logo">Al<span>Mazrouei</span> Advocates</a>
-            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+            <a href="#" class="nav-brand">
+                <svg class="nav-brand-icon" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+                <span class="nav-logo-text">Al<span>Mazrouei</span> Advocates</span>
+            </a>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu">
                 <span></span><span></span><span></span>
             </button>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#services">Services</a></li>
+                <li><a href="#services">Practice Areas</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#testimonials">Testimonials</a></li>
-                <li><a href="#contact" class="nav-cta">Free Consultation</a></li>
+                <li><a href="#contact" class="nav-cta">Consultation</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero -->
+    <!-- --- Hero --- -->
     <section class="hero">
+        <div class="hero-bg-line"></div>
+        <div class="hero-accent-dot"></div>
         <div class="hero-inner">
             <div>
-                <div class="hero-badge"><span class="hero-badge-dot"></span> Serving Dubai's Business Community</div>
-                <h1>Corporate Law Excellence in <span>Dubai, UAE</span></h1>
-                <p class="hero-desc">Abdulla Al Mazrouei Advocates & Legal Consultants delivers strategic corporate counsel to multinational enterprises, financial institutions, and high-growth companies navigating the UAE legal landscape.</p>
-                <div class="hero-btns">
-                    <a href="#contact" class="btn-primary">Schedule a Consultation</a>
-                    <a href="#services" class="btn-outline">Explore Services</a>
+                <div class="hero-eyebrow">
+                    <span class="hero-eyebrow-line"></span>
+                    Dubai's Trusted Corporate Counsel
+                </div>
+                <h1>Legal Excellence for <em>Business in the UAE</em></h1>
+                <p class="hero-desc">
+                    Abdulla Al Mazrouei Advocates &amp; Legal Consultants provides strategic corporate legal services to multinational enterprises, financial institutions, and growth-stage companies operating in the United Arab Emirates and across the GCC.
+                </p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="22" y1="2" y2="6"/><line x1="8" x2="2" y1="2" y2="6"/><line x1="12" x2="12" y1="10" y2="15"/><polyline points="8.5 13 12 15.5 15.5 13"/></svg>
+                        Schedule a Consultation
+                    </a>
+                    <a href="#services" class="btn-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                        Our Practice Areas
+                    </a>
                 </div>
             </div>
-            <div class="hero-visual">
-                <div class="hero-card">
-                    <div class="hero-stat-row">
-                        <div class="hero-stat">
-                            <h3>15+</h3>
-                            <p>Years of Practice</p>
+            <div>
+                <div class="hero-stats-card">
+                    <div class="hero-stats-grid">
+                        <div>
+                            <div class="hero-stat-value">15+</div>
+                            <div class="hero-stat-label">Years of Practice</div>
                         </div>
-                        <div class="hero-stat">
-                            <h3>500+</h3>
-                            <p>Corporate Clients</p>
+                        <div>
+                            <div class="hero-stat-value">500+</div>
+                            <div class="hero-stat-label">Corporate Clients</div>
                         </div>
-                        <div class="hero-stat">
-                            <h3>75+</h3>
-                            <p>Lexology Articles</p>
+                        <div>
+                            <div class="hero-stat-value">75+</div>
+                            <div class="hero-stat-label">Lexology Articles</div>
                         </div>
-                        <div class="hero-stat">
-                            <h3>98%</h3>
-                            <p>Client Retention</p>
+                        <div>
+                            <div class="hero-stat-value">98%</div>
+                            <div class="hero-stat-label">Client Retention</div>
                         </div>
                     </div>
-                    <div class="hero-clients">
-                        <div class="hero-clients-avatars">
-                            <span>MS</span><span>AG</span><span>NB</span><span>+</span>
-                        </div>
-                        <p>Trusted by <strong>leading corporations</strong> across the GCC</p>
-                    </div>
+                    <div class="hero-divider"></div>
+                    <p class="hero-trust-line">Trusted by leading corporations across the GCC and MENA region</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Trust Strip -->
-    <div class="trust-strip">
-        <div class="trust-inner">
-            <div class="trust-item">
-                <div class="trust-icon">&#9878;</div>
-                <div class="trust-text">Licensed by UAE Ministry of Justice</div>
+    <!-- --- Trust Bar --- -->
+    <div class="trust-bar">
+        <div class="trust-bar-inner">
+            <div class="trust-bar-item">
+                <svg class="trust-bar-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span class="trust-bar-text">Licensed by UAE Ministry of Justice</span>
             </div>
-            <div class="trust-item">
-                <div class="trust-icon">&#9733;</div>
-                <div class="trust-text">Published on Lexology</div>
+            <div class="trust-bar-item">
+                <svg class="trust-bar-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+                <span class="trust-bar-text">Published on Lexology &amp; Mondaq</span>
             </div>
-            <div class="trust-item">
-                <div class="trust-icon">&#9731;</div>
-                <div class="trust-text">Dubai Courts Registered</div>
+            <div class="trust-bar-item">
+                <svg class="trust-bar-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                <span class="trust-bar-text">Registered with Dubai Courts</span>
             </div>
-            <div class="trust-item">
-                <div class="trust-icon">&#10003;</div>
-                <div class="trust-text">Multilingual: EN / AR / FR</div>
+            <div class="trust-bar-item">
+                <svg class="trust-bar-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+                <span class="trust-bar-text">Trilingual: Arabic / English / French</span>
             </div>
         </div>
     </div>
 
-    <!-- Services -->
-    <section class="section" id="services">
+    <!-- --- Services --- -->
+    <section class="section section-alt" id="services">
         <div class="section-inner">
-            <span class="section-tag">Practice Areas</span>
-            <h2 class="section-title">Comprehensive Corporate Legal Services</h2>
-            <p class="section-desc">From company incorporation to complex cross-border disputes, our team provides end-to-end legal solutions tailored to your business objectives.</p>
+            <span class="section-eyebrow">Practice Areas</span>
+            <h2 class="section-heading">Comprehensive Corporate Legal Services</h2>
+            <p class="section-lead">
+                From entity formation to complex cross-border disputes, our team provides end-to-end legal solutions engineered around your commercial objectives.
+            </p>
             <div class="services-grid">
+                <!-- 1 -->
                 <div class="service-card">
-                    <div class="service-icon">&#9879;</div>
-                    <h3>Company Formation & Incorporation</h3>
-                    <p>Structuring mainland, free zone, and offshore entities. Full guidance on ownership frameworks, licensing, and regulatory compliance under UAE Commercial Companies Law.</p>
+                    <div class="service-icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
+                    <div class="service-body">
+                        <h3>Company Formation &amp; Incorporation</h3>
+                        <p>Structuring mainland, free zone, and offshore entities with full guidance on ownership frameworks, licensing, and regulatory compliance under UAE Commercial Companies Law.</p>
+                    </div>
                 </div>
+                <!-- 2 -->
                 <div class="service-card">
-                    <div class="service-icon">&#9874;</div>
-                    <h3>Mergers & Acquisitions</h3>
-                    <p>End-to-end M&A advisory including due diligence, deal structuring, regulatory approvals, and post-merger integration across UAE and cross-border transactions.</p>
+                    <div class="service-icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="service-body">
+                        <h3>Mergers &amp; Acquisitions</h3>
+                        <p>Full-service M&A advisory including due diligence, deal structuring, regulatory approvals, and post-merger integration across UAE and cross-border transactions.</p>
+                    </div>
                 </div>
+                <!-- 3 -->
                 <div class="service-card">
-                    <div class="service-icon">&#9871;</div>
-                    <h3>Corporate Restructuring & Insolvency</h3>
-                    <p>Strategic restructuring, bankruptcy protection, and creditor negotiation under UAE Insolvency Law. Preserving business value while navigating financial distress.</p>
+                    <div class="service-icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/><path d="M21 3v5h-5"/><path d="M12 8v8"/><path d="m9 12 3 3 3-3"/></svg>
+                    </div>
+                    <div class="service-body">
+                        <h3>Corporate Restructuring &amp; Insolvency</h3>
+                        <p>Strategic restructuring, bankruptcy protection, and creditor negotiation under UAE Insolvency Law, preserving enterprise value during periods of financial distress.</p>
+                    </div>
                 </div>
+                <!-- 4 -->
                 <div class="service-card">
-                    <div class="service-icon">&#9865;</div>
-                    <h3>Commercial Litigation & Arbitration</h3>
-                    <p>Aggressive representation before UAE courts and arbitral tribunals. Expertise in shareholder disputes, breach of contract, and enforcement of foreign judgments.</p>
+                    <div class="service-icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>
+                    </div>
+                    <div class="service-body">
+                        <h3>Commercial Litigation &amp; Arbitration</h3>
+                        <p>Representation before UAE courts and arbitral tribunals with expertise in shareholder disputes, breach of contract, and enforcement of foreign judgments and awards.</p>
+                    </div>
                 </div>
+                <!-- 5 -->
                 <div class="service-card">
-                    <div class="service-icon">&#9883;</div>
-                    <h3>Banking & Finance Law</h3>
-                    <p>Regulatory compliance, loan documentation, security enforcement, and fintech advisory. Navigating UAE Central Bank regulations and cross-border financing structures.</p>
+                    <div class="service-icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <div class="service-body">
+                        <h3>Banking &amp; Finance Law</h3>
+                        <p>Regulatory compliance, loan documentation, security enforcement, and fintech advisory aligned with UAE Central Bank regulations and cross-border financing frameworks.</p>
+                    </div>
                 </div>
+                <!-- 6 -->
                 <div class="service-card">
-                    <div class="service-icon">&#9872;</div>
-                    <h3>Employment & Labour Law</h3>
-                    <p>Workforce structuring, executive contracts, terminations, and dispute resolution under UAE Labour Law. Protecting employer interests while ensuring full compliance.</p>
+                    <div class="service-icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="service-body">
+                        <h3>Employment &amp; Labour Law</h3>
+                        <p>Workforce structuring, executive employment contracts, terminations, and dispute resolution under UAE Labour Law, safeguarding employer interests while maintaining full compliance.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About / Why Us -->
-    <section class="about section" id="about">
+    <!-- --- About / Why Us --- -->
+    <section class="about-section section" id="about">
         <div class="section-inner">
             <div class="about-grid">
                 <div>
-                    <span class="section-tag">Why Al Mazrouei</span>
-                    <h2 class="section-title">Legal Counsel Built on Trust, Delivered with Precision</h2>
-                    <p class="section-desc">We combine deep local knowledge with international legal standards. Our multicultural team brings perspective from civil law, common law, and Sharia-based legal traditions.</p>
-                    <div class="about-features">
-                        <div class="about-feature">
-                            <div class="about-feature-icon">&#9672;</div>
-                            <div>
-                                <h4>Strategic, Not Just Procedural</h4>
-                                <p>We align every legal action with your business goals — not just the letter of the law.</p>
+                    <span class="section-eyebrow section-eyebrow-light">Why Al Mazrouei</span>
+                    <h2 class="section-heading section-heading-light">Legal Counsel Built on Trust, Delivered with Precision</h2>
+                    <p class="section-lead section-lead-light">
+                        We combine deep local knowledge with international legal standards. Our multicultural team brings perspective from civil law, common law, and Sharia-based legal traditions.
+                    </p>
+                    <div class="about-pillars">
+                        <div class="about-pillar">
+                            <svg class="about-pillar-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                            <div class="about-pillar-content">
+                                <h4>Strategic, Not Merely Procedural</h4>
+                                <p>We align every legal action with your commercial objectives rather than simply applying the letter of the law.</p>
                             </div>
                         </div>
-                        <div class="about-feature">
-                            <div class="about-feature-icon">&#9672;</div>
-                            <div>
+                        <div class="about-pillar">
+                            <svg class="about-pillar-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                            <div class="about-pillar-content">
                                 <h4>Proactive Risk Management</h4>
-                                <p>Identifying potential liabilities before they escalate into costly disputes or regulatory actions.</p>
+                                <p>Identifying potential liabilities before they escalate into costly disputes or adverse regulatory findings.</p>
                             </div>
                         </div>
-                        <div class="about-feature">
-                            <div class="about-feature-icon">&#9672;</div>
-                            <div>
+                        <div class="about-pillar">
+                            <svg class="about-pillar-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                            <div class="about-pillar-content">
                                 <h4>Full-Spectrum Representation</h4>
-                                <p>Corporate, litigation, arbitration, and regulatory — a single firm for all your UAE legal needs.</p>
+                                <p>Corporate, litigation, arbitration, and regulatory advisory from a single firm covering your entire UAE legal footprint.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="about-visual">
-                    <div class="about-stat-card">
-                        <h3>75+</h3>
-                        <p>Published legal articles on Lexology covering UAE corporate, insolvency, and arbitration law</p>
+                <div class="about-metrics">
+                    <div class="about-metric">
+                        <div class="about-metric-value">75+</div>
+                        <div class="about-metric-label">Published legal articles on Lexology and Mondaq covering UAE corporate, insolvency, and arbitration law</div>
                     </div>
-                    <div class="about-stat-card">
-                        <h3>Multi-Jurisdictional</h3>
-                        <p>Practice spanning UAE mainland, DIFC, ADGM, and cross-border matters across the GCC and MENA region</p>
+                    <div class="about-metric">
+                        <div class="about-metric-value">Multi-Jurisdictional</div>
+                        <div class="about-metric-label">Practice spanning UAE mainland, DIFC, ADGM, and cross-border matters across the GCC and MENA region</div>
                     </div>
-                    <div class="about-stat-card">
-                        <h3>Trilingual Team</h3>
-                        <p>Fluent in Arabic, English, and French — ensuring seamless communication with clients and courts</p>
+                    <div class="about-metric">
+                        <div class="about-metric-value">Trilingual</div>
+                        <div class="about-metric-label">Fluent in Arabic, English, and French to ensure seamless communication with clients and the courts</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="testimonials section" id="testimonials">
+    <!-- --- Testimonials --- -->
+    <section class="section" id="testimonials">
         <div class="section-inner">
-            <span class="section-tag">Client Trust</span>
-            <h2 class="section-title">What Our Clients Say</h2>
-            <p class="section-desc">We measure success by the businesses we help protect, grow, and navigate through complexity.</p>
+            <span class="section-eyebrow">Client Trust</span>
+            <h2 class="section-heading">What Our Clients Say</h2>
+            <p class="section-lead">
+                We measure our success by the enterprises we help protect, grow, and navigate through complex legal terrain.
+            </p>
             <div class="testimonials-grid">
                 <div class="testimonial-card">
-                    <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                    <p class="testimonial-text">"Al Mazrouei Advocates navigated our complex cross-border M&A with remarkable precision. Their strategic approach saved us months of negotiation and significant deal risk."</p>
+                    <svg class="testimonial-quote-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M11.303 5.004c-.64 2.66-1.303 4.746-1.303 7.996 0 5.196 3.392 7.994 6.994 7.994a6.994 6.994 0 0 0 7.002-7.003c0-4.89-3.496-7.993-7.002-7.993-1.19 0-2.308.29-3.283.83l-2.408 3.176zm-11.299 0c-.64 2.66-1.303 4.746-1.303 7.996 0 5.196 3.392 7.994 6.994 7.994a6.994 6.994 0 0 0 7.002-7.003c0-4.89-3.496-7.993-7.002-7.993-1.19 0-2.308.29-3.283.83l-2.408 3.176z"/></svg>
+                    <p class="testimonial-text">
+                        "Al Mazrouei Advocates navigated our complex cross-border M&A with remarkable precision. Their strategic approach saved us months of negotiation and significantly reduced deal risk."
+                    </p>
                     <div class="testimonial-author">
-                        <div class="testimonial-avatar">MH</div>
+                        <div class="testimonial-initials">MH</div>
                         <div>
                             <div class="testimonial-name">Mohammed Al Hashemi</div>
-                            <div class="testimonial-role">CEO, GCC Investment Holdings</div>
+                            <div class="testimonial-role">Chief Executive Officer, GCC Investment Holdings</div>
                         </div>
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                    <p class="testimonial-text">"When our company faced a critical shareholder dispute, their litigation team delivered a favorable judgment within months. Their courtroom advocacy is exceptional."</p>
+                    <svg class="testimonial-quote-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M11.303 5.004c-.64 2.66-1.303 4.746-1.303 7.996 0 5.196 3.392 7.994 6.994 7.994a6.994 6.994 0 0 0 7.002-7.003c0-4.89-3.496-7.993-7.002-7.993-1.19 0-2.308.29-3.283.83l-2.408 3.176zm-11.299 0c-.64 2.66-1.303 4.746-1.303 7.996 0 5.196 3.392 7.994 6.994 7.994a6.994 6.994 0 0 0 7.002-7.003c0-4.89-3.496-7.993-7.002-7.993-1.19 0-2.308.29-3.283.83l-2.408 3.176z"/></svg>
+                    <p class="testimonial-text">
+                        "When our company faced a critical shareholder dispute, their litigation team delivered a favourable judgment within months. Their advocacy before the Dubai Courts is exceptional."
+                    </p>
                     <div class="testimonial-author">
-                        <div class="testimonial-avatar">SR</div>
+                        <div class="testimonial-initials">SR</div>
                         <div>
                             <div class="testimonial-name">Sarah Reynolds</div>
                             <div class="testimonial-role">Managing Director, TechVentures ME</div>
@@ -536,10 +654,12 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                    <p class="testimonial-text">"Restructuring our distressed business seemed impossible until we engaged Al Mazrouei. They negotiated terms that preserved our operations and satisfied all stakeholders."</p>
+                    <svg class="testimonial-quote-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M11.303 5.004c-.64 2.66-1.303 4.746-1.303 7.996 0 5.196 3.392 7.994 6.994 7.994a6.994 6.994 0 0 0 7.002-7.003c0-4.89-3.496-7.993-7.002-7.993-1.19 0-2.308.29-3.283.83l-2.408 3.176zm-11.299 0c-.64 2.66-1.303 4.746-1.303 7.996 0 5.196 3.392 7.994 6.994 7.994a6.994 6.994 0 0 0 7.002-7.003c0-4.89-3.496-7.993-7.002-7.993-1.19 0-2.308.29-3.283.83l-2.408 3.176z"/></svg>
+                    <p class="testimonial-text">
+                        "Restructuring our distressed manufacturing business seemed unattainable until we engaged Al Mazrouei. They negotiated terms that preserved our operations and satisfied all creditors."
+                    </p>
                     <div class="testimonial-author">
-                        <div class="testimonial-avatar">AK</div>
+                        <div class="testimonial-initials">AK</div>
                         <div>
                             <div class="testimonial-name">Ahmed Al Ketbi</div>
                             <div class="testimonial-role">Founder, Emirates Manufacturing Group</div>
@@ -550,63 +670,69 @@
         </div>
     </section>
 
-    <!-- CTA / Lead Capture -->
-    <section class="cta section" id="contact">
+    <!-- --- CTA / Contact --- -->
+    <section class="cta-section section" id="contact">
         <div class="section-inner">
-            <span class="section-tag" style="color: var(--gold-light);">Get Started</span>
-            <h2 class="section-title">Your Corporate Legal Strategy Starts Here</h2>
-            <p class="section-desc">Every day without sound legal counsel is a day of unnecessary exposure. Let us assess your position and build a strategy that protects what you have built.</p>
-            <div class="cta-form" id="leadForm">
-                <div class="success-msg" id="successMsg">Thank you for reaching out. A senior counsel from Al Mazrouei Advocates will contact you within 24 hours.</div>
+            <span class="section-eyebrow section-eyebrow-light">Engage Our Team</span>
+            <h2 class="section-heading section-heading-light">Your Corporate Legal Strategy Begins Here</h2>
+            <p class="section-lead section-lead-light">
+                Every day without sound legal counsel is a day of unnecessary exposure. Let us assess your position and craft a strategy that protects what you have built.
+            </p>
+            <div class="contact-card">
+                <div class="success-msg" id="successMsg">
+                    Thank you for your enquiry. A senior counsel from Al Mazrouei Advocates will contact you within one business day.
+                </div>
                 <form id="contactForm">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name" placeholder="Your full name" required>
+                            <input type="text" id="name" name="name" class="form-field" placeholder="Your full name" required>
                         </div>
                         <div class="form-group">
                             <label for="company">Company</label>
-                            <input type="text" id="company" name="company" placeholder="Company name" required>
+                            <input type="text" id="company" name="company" class="form-field" placeholder="Company name" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="email">Business Email</label>
-                            <input type="email" id="email" name="email" placeholder="you@company.com" required>
+                            <input type="email" id="email" name="email" class="form-field" placeholder="you@company.com" required>
                         </div>
                         <div class="form-group">
                             <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" placeholder="+971 XX XXX XXXX" required>
+                            <input type="tel" id="phone" name="phone" class="form-field" placeholder="+971 XX XXX XXXX" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="service">Area of Interest</label>
-                        <select id="service" name="service" required>
+                        <select id="service" name="service" class="form-field" required>
                             <option value="" disabled selected>Select a practice area</option>
-                            <option value="company-formation">Company Formation & Incorporation</option>
-                            <option value="mergers-acquisitions">Mergers & Acquisitions</option>
-                            <option value="restructuring">Corporate Restructuring & Insolvency</option>
-                            <option value="litigation">Commercial Litigation & Arbitration</option>
-                            <option value="banking">Banking & Finance Law</option>
-                            <option value="employment">Employment & Labour Law</option>
+                            <option value="company-formation">Company Formation &amp; Incorporation</option>
+                            <option value="mergers-acquisitions">Mergers &amp; Acquisitions</option>
+                            <option value="restructuring">Corporate Restructuring &amp; Insolvency</option>
+                            <option value="litigation">Commercial Litigation &amp; Arbitration</option>
+                            <option value="banking">Banking &amp; Finance Law</option>
+                            <option value="employment">Employment &amp; Labour Law</option>
                             <option value="other">Other / Multiple Areas</option>
                         </select>
                     </div>
-                    <div class="form-group full">
-                        <label for="message">Brief Description</label>
-                        <textarea id="message" name="message" placeholder="Tell us about your legal needs or questions..." required></textarea>
+                    <div class="form-group">
+                        <label for="message">Brief Description of Your Matter</label>
+                        <textarea id="message" name="message" class="form-field" placeholder="Please describe your legal requirements or questions..." required></textarea>
                     </div>
-                    <button type="submit" class="form-submit">Request Free Consultation</button>
-                    <p class="form-disclaimer">Your information is confidential and protected by attorney-client privilege. We will never share your details with third parties.</p>
+                    <button type="submit" class="btn-submit">Request a Consultation</button>
+                    <p class="form-note">
+                        Your information is confidential and protected by attorney-client privilege. We do not share client details with third parties.
+                    </p>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- --- Footer --- -->
     <footer class="footer">
         <div class="footer-inner">
-            <p class="footer-text">&copy; 2026 Abdulla Al Mazrouei Advocates & Legal Consultants. All rights reserved. Dubai, United Arab Emirates.</p>
+            <p class="footer-text">&copy; 2026 Abdulla Al Mazrouei Advocates &amp; Legal Consultants. All rights reserved. Dubai, United Arab Emirates.</p>
             <ul class="footer-links">
                 <li><a href="#">Privacy Policy</a></li>
                 <li><a href="#">Terms of Use</a></li>
@@ -616,6 +742,9 @@
     </footer>
 
     <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
         // Navigation scroll effect
         const nav = document.getElementById('nav');
         window.addEventListener('scroll', () => {
@@ -629,7 +758,7 @@
             navLinks.classList.toggle('open');
         });
 
-        // Smooth scroll for nav links (close mobile menu after click)
+        // Smooth scroll and close mobile menu
         document.querySelectorAll('.nav-links a, a[href^="#"]').forEach(link => {
             link.addEventListener('click', function(e) {
                 const target = document.querySelector(this.getAttribute('href'));
@@ -646,19 +775,17 @@
         const successMsg = document.getElementById('successMsg');
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            // Simulate submission (in production, replace with actual form handler)
             contactForm.style.display = 'none';
             successMsg.style.display = 'block';
-            // Reset after demo
             setTimeout(() => {
                 contactForm.style.display = 'block';
                 successMsg.style.display = 'none';
                 contactForm.reset();
-            }, 5000);
+            }, 6000);
         });
 
-        // Intersection Observer for animated reveals
-        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        // Intersection Observer for scroll reveals
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -40px 0px' };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -668,10 +795,10 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.service-card, .testimonial-card, .about-feature, .about-stat-card').forEach(el => {
+        document.querySelectorAll('.service-card, .testimonial-card, .about-pillar, .about-metric').forEach(el => {
             el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            el.style.transform = 'translateY(16px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
             observer.observe(el);
         });
     </script>
